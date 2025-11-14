@@ -91,13 +91,15 @@ int validate_db_header(int fd, struct dbheader_t **headerOut) {
 		free(header);
 		return STATUS_ERROR;
 	}
+
+	*headerOut = header;
 }
 
 int create_db_header(struct dbheader_t **headerOut) {
 	struct dbheader_t *header = calloc(1, sizeof(struct dbheader_t));
 	if (header == NULL) {
 		printf("Calloc failed allocating memory for 1 dbheader_t\n");
-	return STATUS_ERROR;
+		return STATUS_ERROR;
 	}
 	header->version = 0x1;
 	header->count = 0;
