@@ -19,8 +19,10 @@ int main(int argc, char *argv[]) {
   kv_put(table, "hehe", "haha");
 
   for (size_t i = 0; i < table->capacity; i++) {
-    printf("[%ld] %s : %s\n", i, table->entries[i].key,
-           table->entries[i].value);
+    if (table->entries[i].key) {
+      printf("[%ld] %s : %s\n", i, table->entries[i].key,
+             table->entries[i].value);
+    }
   }
 
   return 0;

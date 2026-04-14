@@ -56,7 +56,10 @@ int kv_put(kv_t *table, const char *key, const char *value) {
 		if (entry->key && entry->key != TOMBSTONE && !strcmp(entry->key, key)) {
 
 			char *new_value = strdup(value);
-			if (!new_value) { return -1; }
+			if (!new_value) { 
+				free(new_value);
+				return -1;
+			}
 			entry->value = new_value;
 
 			return real_idx;
@@ -81,6 +84,6 @@ int kv_put(kv_t *table, const char *key, const char *value) {
 	}
 	
 	// Table is full
-	return -1;
+	return -2;
 }
 
