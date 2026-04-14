@@ -1,7 +1,6 @@
 #include <getopt.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 #include <kv.h>
 
@@ -16,6 +15,13 @@ int main(int argc, char *argv[]) {
   kv_t *table = kv_init(3);
   printf("%p\n", table);
   printf("%ld\n", table->capacity);
+
+  kv_put(table, "hehe", "haha");
+
+  for (size_t i = 0; i < table->capacity; i++) {
+    printf("[%ld] %s : %s\n", i, table->entries[i].key,
+           table->entries[i].value);
+  }
 
   return 0;
 }
