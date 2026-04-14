@@ -62,7 +62,8 @@ int kv_put(kv_t *table, const char *key, const char *value) {
 			}
 			entry->value = new_value;
 
-			return real_idx;
+			return 0;
+			// return real_idx;
 		}
 
 		// Empty slot, insert new entry
@@ -79,7 +80,8 @@ int kv_put(kv_t *table, const char *key, const char *value) {
 			entry->value = new_value;
 			table->count++;
 
-			return real_idx;
+			return 0;
+			// return real_idx;
 		}
 	}
 	
