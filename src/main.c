@@ -6,6 +6,7 @@
 #include "common.h"
 #include "file.h"
 #include "parse.h"
+#include <kv.h>
 
 void print_usage(char *argv[]) {
   printf("Usage: %s -n -f <filename.db>\n", argv[0]);
@@ -15,6 +16,11 @@ void print_usage(char *argv[]) {
 }
 
 int main(int argc, char *argv[]) {
+  kv_t *table = kv_init(3);
+  printf("%p\n", table);
+  printf("%ld\n", table->capacity);
+
+  return 0;
   int c;
   bool newfile = false;
   char *filepath = NULL;
@@ -53,16 +59,16 @@ int main(int argc, char *argv[]) {
       printf("Unable to create new file\n");
       return -1;
     }
-	
-	if (create_db_header(&dbheader) == STATUS_ERROR) {
-		printf("Unable to create db header\n");
-		return -1;
-	}
 
-	if (output_file(dbfd, dbheader, NULL) == STATUS_ERROR) {
-		printf("Unable to write db header to file\n");
-		return -1;
-	}
+    if (create_db_header(&dbheader) == STATUS_ERROR) {
+      printf("Unable to create db header\n");
+      return -1;
+    }
+
+    if (output_file(dbfd, dbheader, NULL) == STATUS_ERROR) {
+      printf("Unable to write db header to file\n");
+      return -1;
+    }
   } else {
     dbfd = open_db_file(filepath);
     if (dbfd == STATUS_ERROR) {
@@ -70,10 +76,10 @@ int main(int argc, char *argv[]) {
       return -1;
     }
 
-	if (validate_db_header(dbfd, &dbheader) == STATUS_ERROR) {
-		printf("Invalid db header\n");
-		return -1;
-	}
+    if (validate_db_header(dbfd, &dbheader) == STATUS_ERROR) {
+      printf("Invalid db header\n");
+      return -1;
+    }
   }
 
   printf("Newfile: %d\n", newfile);
